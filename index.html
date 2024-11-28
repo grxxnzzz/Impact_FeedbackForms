@@ -149,6 +149,7 @@
 
         .feedback-stars{
             max-width: 500px;
+            margin-top: 2rem;
         }
 
         .feedback-fields {
@@ -156,7 +157,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
-            gap: 3rem;
         }
 
         .feedback-title {
@@ -179,19 +179,23 @@
             font-size:x-large;
         }
 
+        .feedback-review {
+            margin-top: 2rem;
+        }
+
         .feedback-review>textarea {
             width: 500px;
-            height: 350px;
+            height: 450px;
             min-width: 500px;
             min-height: 350px;
             max-width: 500px;
-            max-height: 350px;
+            max-height: 450px;
             outline: none;
             border: 2px solid transparent;
             transition: all 0.2s;
             font-family: "Tahoma", sans-serif;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 14px;
             line-height: 1.5;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -395,6 +399,38 @@
     }
 }
 
+    // Функция для изменения имени в родительный падеж
+function toGenitive(name) {
+    if (!name) return "Введите имя";
+
+    // Простые правила склонения
+    const rules = [
+        { ending: "а", replace: "ы" }, // Марина → Марины
+        { ending: "я", replace: "и" }, // Мария → Марии
+        { ending: "й", replace: "я" }, // Алексей → Алексея
+        { ending: "ь", replace: "я" }, // Лев → Льва
+        { ending: "ий", replace: "ия" }, // Дмитрий → Дмитрия
+        { ending: "ей", replace: "ея" }, // Сергей → Сергея
+        { ending: "ка", replace: "ки" }, // Вероника → Вероники
+        { ending: "на", replace: "ны" }  // Светлана → Светланы
+    ];
+
+    // Проверяем окончания
+    for (let rule of rules) {
+        if (name.toLowerCase().endsWith(rule.ending)) {
+            return name.slice(0, -rule.ending.length) + rule.replace;
+        }
+    }
+
+    // Добавляем "а" для мужских имен, которые не меняются (например, Иван → Ивана)
+    if (/^[а-яё]+$/i.test(name) && !name.toLowerCase().endsWith("а") && !name.toLowerCase().endsWith("я")) {
+        return name + "а";
+    }
+
+    return name; // Если имя не нужно изменять
+}
+
+
     // ЭЛЕМЕНТЫ HTML
     let generate_btn = document.getElementById("generateButton");
     // КНОПКА ГЕНЕРАЦИИ
@@ -403,6 +439,7 @@
         let feedback = "";
         // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
         let Name = document.getElementById("studentName").value;
+        let genitiveName = toGenitive(Name.split(" ")[0]);
         let Gender = document.getElementById("studentGender").value;
         let Course = document.getElementById("courseName").value;
         let Behavior = document.getElementById("studentBehavior").value;
@@ -419,25 +456,65 @@
                 break;
             default:
                 NameInText.textContent = Name;
+                Name = Name.split(" ")[0];
                 feedback += `${Name} прилежный ученик академии Impact A&C. На всех уроках задает вопросы, внимательно изучает теоретический материал и успешно применяет его на практике. `;
+        };
+
+        switch(Gender) {
+            case "male":
+                feedback += `Он отлично освоил модуль ${Course}. `
+                break;
+            case "female":
+                feedback += `Она отлично освоил модуль ${Course}. `
+                break;
         };
 
         switch(Course) {
             case "":
                 alert("Введите название курса!")
                 break;
+        };
+
+        switch(Behavior) {
+            case "neutral":
+                feedback+="Замечаний насчёт поведения в классе нет. ";
+                break;
+            case "good":
+                feedback+="Хвалим за прилежное поведение, дружелюбность и внимательность на лекциях! ";
+                break;
+            case "bad":
+                feedback+=`К сожалению, поведение ${genitiveName} отвлекает как ${genitiveName}, так и других учеников в классе от учебного процесса. Настоятельно просим решить этот вопрос, поговорив с ребенком. ${Course} - увлекательная область, пользующаяся большой популярностью, и, на мой взгляд, у ${genitiveName} есть способности и потенциал в этом направлении. ${Gender ? "Ему" : "Ей"} просто нужно немного усердия и усилий, и ${Gender ? "он" : "она"} добьется успеха! `;
+                break;
         }
 
-        switch(Gender) {
-            case "male":
-                feedback += `Он отлично освоил данный модуль ${Course}. `
+        switch(isLate) {
+            case true:
+                let minutes = document.getElementById("minutesLate").value;
+                feedback += `Однако иногда ${Name} опаздывает на урок на ${minutes} минут. Мы просим вас следить за ним и удостовериться, что он приходит на уроки вовремя. За эти ${minutes} минут группа успевает начать анализ домашних заданий и изучение новой темы, и он упускает важную информацию. `;
                 break;
-            case "female":
-                feedback += `Она отлично освоил данный модуль ${Course}. `
+            case false:
+                feedback += "Замечаний о пунктуальности нет. ";
+                break;
+        };
+
+        switch(isDoingHomework) {
+            case true:
+                feedback+="Выполнял домашние задания в срок. ";
+                break;
+            case false:
+                feedback+="Почти не выполняет домашние задания! По этой причине у него возникают трудности с освоением нового материала. Пожалуйста, проверяйте и следите за выполнением всех заданий после каждого урока. ";
+                break;
+        };
+
+        switch(goodResponse) {
+            case true: 
+                feedback+=`Судя по работе в классе, я могу с уверенностью сказать, что ${Name} обладает фантазией и творческим мышлением. В области ${Course} он достигнет отличных результатов, если продолжать прилагать усилия. `;
+                break;
+            case false:  
                 break;
         }
 
-        
+        document.getElementById("feedback").textContent = feedback;
 
         // ДЛЯ ДЕБАГА
         console.log("Name", Name); // v
