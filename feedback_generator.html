@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback Generator</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+        body {
+            font-family: "Source Code Pro", monospace;
+            /* background-color: #2a3772; */
+            background-color:whitesmoke;
+            /* color:white; */
+        }
+
+        div,
+        h4 {
+            margin: 0;
+            padding: 0;
+        }
+
+        legend {
+            text-transform: uppercase;
+            font-weight: bold;
+            color: white;
+            margin-bottom: .3rem;
+            background-color:#ED1070;
+            padding: .1rem .2rem;
+        }
+
+        fieldset {
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            background-color: white;
+            border-radius: .2rem;
+            border: none;
+        }
+
+        input:disabled {
+            cursor:not-allowed;
+        }
+        
+        .mainButtonsSet {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        #generateButton, 
+        #saveButton {
+            outline: none;
+            border:none;
+            border-radius: .1rem;
+            padding: .5rem .2rem;
+            font-family: "Source Code Pro", monospace;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        #generateButton:hover, 
+        #saveButton:hover {
+            cursor:pointer;
+        }
+
+        #generateButton:active, 
+        #saveButton:active {
+            transform: scale(95%);
+            transition: all 0.1s;
+        }
+
+        #generateButton {
+            background-color:#ED1070;
+            color: white;
+        }
+
+        #saveButton{
+            background-color:#61d85d;
+            color:white;
+        }
+
+        #generateButton:hover {
+            background-color:#c20f5c;
+        }
+
+        #saveButton:hover {
+            background-color:#489c45;
+        }
+
+        .main-container {
+            display: flex;
+            padding: 2rem;
+            width: 100%;
+            height: 100%;
+            flex-wrap: nowrap;
+            align-items: start;
+            justify-content: space-around;
+        }
+
+        .fields {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: .5rem;
+        }
+
+        .options-container {
+            width: 25%;
+        }
+
+        .form-container {
+            width: auto;
+            height: auto;
+        }
+
+        .feedback-form {
+            position: relative;
+            width: 8.5in;
+            /* Match Letter size */
+            height: 11in;
+            /* Match Letter size */
+            overflow: hidden;
+            /* Prevent overflow */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        }
+
+        .feedback-form-image {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            /* Positions the image in the container */
+            top: 0;
+            left: 0;
+            z-index: 1;
+            /* Image behind the text */
+        }
+
+        .feedback-title,
+        .feedback-stars,
+        .feedback-review {
+            position: relative;
+            /* Position elements over the image */
+            z-index: 2;
+            /* Text appears above the image */
+            color: black;
+            /* Adjust text color for visibility */
+        }
+
+        .feedback-stars{
+            max-width: 500px;
+        }
+
+        .feedback-fields {
+            padding: 5% 0 0 15%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            gap: 3rem;
+        }
+
+        .feedback-title {
+            /* top: 10%;
+            left: 13%; */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback-title>h1 {
+            color: #ED1070;
+            text-transform: uppercase;
+            margin-bottom: .3rem;
+        }
+
+        .feedback-title>h3 {
+            color: #0131FF;
+            text-transform: capitalize;
+            margin: 0;
+            font-size:x-large;
+        }
+
+        .feedback-review>textarea {
+            width: 500px;
+            height: 350px;
+            min-width: 500px;
+            min-height: 350px;
+            max-width: 500px;
+            max-height: 350px;
+            outline: none;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            font-family: "Tahoma", sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .feedback-review>textarea:focus {
+            outline: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #rating span {
+            font-size: 42px;
+            cursor: pointer;
+            color: gray;
+            /* Цвет звёзд по умолчанию */
+        }
+
+        #rating span.active {
+            color: orange;
+            /* Цвет активных звёзд */
+        }
+
+        .rating span {
+            font-size: 42px;
+            cursor: pointer;
+            color: gray;
+        }
+
+        .rating span.active {
+            color: orange;
+        }
+
+        .rating {
+            display: flex;
+            align-items:center;
+            justify-content: space-between;
+        }
+    </style>
+
+</head>
+<div class="main-container">
+    <!-- находится слева, там будут все опции для настройки генерации -->
+    <div class="options-container">
+        <form style="display: flex; flex-direction: column; gap: .5rem;">
+            <fieldset class="fields">
+                <legend>ИМЯ, ФАМИЛИЯ, ПОЛ</legend>
+                <label for="studentName">Имя и фамилия:</label>
+                <input type="text" id="studentName" placeholder="Введите имя и фамилию ученика" />
+                <label for="gender">Пол ученика:</label>
+                <select id="studentGender" name="gender">
+                    <option value="male">Мужской</option>
+                    <option value="female">Женский</option>
+                </select>
+            </fieldset>
+            <fieldset class="fields">
+                <legend>Название курса</legend>
+                <input type="text" id="courseName" placeholder="Введите название курса" />
+            </fieldset>
+            <fieldset class="fields">
+                <legend>Поведение ученика</legend>
+                <select id="studentBehavior" name="behavior">
+                    <option value="neutral">Нейтральное</option>
+                    <option value="good">Хорошее</option>
+                    <option value="bad">Плохое</option>
+                </select>
+            </fieldset>
+            <fieldset class="fields">
+                <legend>Опаздывает?</legend>
+                <span style="display: flex; gap: 1rem">
+                    <span>
+                        <input type="radio" name="late" id="late" onclick="isLate_FieldAccessibility(this)"/>
+                        <label for="late">Да</label>
+                    </span>
+                    <span>
+                        <input type="radio" name="late" id="notLate" checked onclick="isLate_FieldAccessibility('notLate')"/>
+                        <label for="late">Нет</label>
+                    </span>
+                </span>
+                <input type="number" name="minutes" id="minutesLate" placeholder="Не опаздывает" disabled />
+            </fieldset>
+            <fieldset class="fields">
+                <legend>Домашнее задание</legend>
+                <span style="display: flex; gap: 1rem">
+                    <input type="radio" name="homeworkDone" id="hDone" checked/>
+                    <label for="homeworkDone">Делает</label>
+                    <input type="radio" name="homeworkDone" id="hNotDone" />
+                    <label for="homeworkDone">Не делает</label>
+                </span>
+            </fieldset>
+            <fieldset class="fields">
+                <legend>Похвалить?</legend>
+                <p>Пример похвалы: <br><cite style="font-size: small;">Судя по практическим работам, я могу с
+                        уверенностью сказать, что Анатолий обладает фантазией и творческим мышлением. В области
+                        этого модуля он достигнет отличных результатов</cite></p>
+                <span style="display: flex; gap: 1rem">
+                    <input type="radio" name="goodWord" id="yesGood" />
+                    <label for="goodWord">Да</label>
+                    <input type="radio" name="goodWord" id="noGood" checked />
+                    <label for="goodWord">Нет</label>
+                </span>
+            </fieldset>
+            <br>
+            <fieldset class="fields">
+                <legend>Выбор языка</legend>
+                <div><input type="radio" name="langSelect" id="ruSelect" onclick="" checked />
+                    <label for="langSelect">Русский</label></div>
+                <div><input type="radio" name="langSelect" id="roSelect" onclick=""/>
+                    <label for="langSelect">Румынский</label></div>
+            </fieldset>
+            <br>
+            <fieldset class="mainButtonsSet fields">
+                <button type="button" style="width: 100%;" id="generateButton">Сгенерировать</button>
+                <button type="button" style="width: 100%;" id="saveButton">Сохранить PDF</button>
+            </fieldset>
+        </form>
+    </div>
+    <!-- непосредственно вывод результата справа в отдельной форме -->
+    <!-- A4 - 297x210mm -->
+    <div class="form-container">
+        <div class="feedback-form" id="feedback-form-full">
+            <img class="feedback-form-image" src="https://i.ibb.co/kHf8WBR/Feedback-Form-Empty.png"
+                alt="feedback_form_from_canva" />
+            <div class="feedback-fields">
+                <div class="feedback-title">
+                    <h1>individual feedback</h1>
+                    <h3 id="h3Name">Имя Фамилия (ученика)</h3>
+                </div>
+                <div class="feedback-stars">
+                    <div id="criteria-1" class="rating">
+                        <h4>1. Выполнение домашнего задания</h5>
+                        <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>    
+                    </div>
+                    <div id="criteria-2" class="rating">
+                        <h4>2. Работа в классе</h5>
+                            <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>  
+                    </div>
+                    <div id="criteria-3" class="rating">
+                        <h4>3. Освоение материала</h5>
+                            <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>  
+                    </div>
+                    <div id="criteria-4" class="rating">
+                        <h4>4. Поведение</h5>
+                            <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>  
+                    </div>
+                    <div id="criteria-5" class="rating">
+                        <h4>5. Работа в команде</h5>
+                            <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>  
+                    </div>
+                    <div id="criteria-6" class="rating">
+                        <h4>6. Взаимодействие с учителем</h5>
+                            <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>  
+                    </div>
+                </div>
+                <div class="feedback-review">
+                    <h3 style="color:#0131FF; margin-bottom: .5rem;">Комментарий учителя:</h3>
+                    <textarea name="feedback" id="feedback" placeholder="Здесь будет автоматически созданный комментарий и добавления от учителя, если нжуно (поле редактируемо)"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script>
+    // ОПЦИИ ДЛЯ PDF ФАЙЛА
+    const options = {
+        margin: 0,
+        filename: `${courseName.value}_${studentName.value}_feedback.pdf`,
+        image: { type: 'png', quality: 1 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    };
+
+    // КНОПКА ДЛЯ СОХРАНЕНИЯ В PDF ФОРМАТ
+    document.getElementById("saveButton").addEventListener('click', () => {
+        html2pdf().set(options).from(document.getElementById('feedback-form-full')).save();
+    })
+
+    // ЛОГИКА ДЛЯ ЗВЕЗДОЧЕК
+    document.querySelectorAll('.rating').forEach(rating => {
+        rating.addEventListener('click', function (e) {
+            if (e.target.tagName === 'SPAN') {
+                let stars = Array.from(this.querySelectorAll('span'));
+                let index = stars.indexOf(e.target);
+
+                // Обновляем класс 'active' для всех звезд
+                stars.forEach((star, i) => {
+                    star.classList.toggle('active', i <= index);
+                });
+            }
+        });
+    });
+
+    // ЛОГИКА БЛОКИРОВКИ ПОЛЯ С МИНУТАМИ ДЛЯ ОПОЗДАНИЯ
+    // если выбрано, что не опаздывает, тогда минуты вписать нельзя
+    const isLate_FieldAccessibility = (radio_element) => {
+      if (radio_element.checked) {
+        document.getElementById("minutesLate").disabled = false;
+        document.getElementById("minutesLate").placeholder = "Введите количество минут опоздания";
+    } else {
+        document.getElementById("minutesLate").disabled = true;
+        document.getElementById("minutesLate").placeholder = "Не опаздывает";
+    }
+}
+
+    // ЭЛЕМЕНТЫ HTML
+    let generate_btn = document.getElementById("generateButton");
+    // КНОПКА ГЕНЕРАЦИИ
+    generate_btn.addEventListener('click', () => {
+        // ГЛАВНОЕ СООБЩЕНИЕ С ОТЗЫВОМ
+        let feedback = "";
+        // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
+        let Name = document.getElementById("studentName").value;
+        let Gender = document.getElementById("studentGender").value;
+        let Course = document.getElementById("courseName").value;
+        let Behavior = document.getElementById("studentBehavior").value;
+        let isLate = document.getElementById("late").checked ? true : false;
+        let isDoingHomework = document.getElementById("hDone").checked ? true : false;
+        let goodResponse = document.getElementById("yesGood").checked ? true : false;
+
+        let NameInText = document.getElementById("h3Name");
+
+        // ЗАПОЛНЕНИЕ ФИДБЕКА
+        switch(Name) {
+            case "":
+                alert("Введите имя и фамилию студента!")
+                break;
+            default:
+                NameInText.textContent = Name;
+                feedback += `${Name} прилежный ученик академии Impact A&C. На всех уроках задает вопросы, внимательно изучает теоретический материал и успешно применяет его на практике. `;
+        };
+
+        switch(Course) {
+            case "":
+                alert("Введите название курса!")
+                break;
+        }
+
+        switch(Gender) {
+            case "male":
+                feedback += `Он отлично освоил данный модуль ${Course}. `
+                break;
+            case "female":
+                feedback += `Она отлично освоил данный модуль ${Course}. `
+                break;
+        }
+
+        
+
+        // ДЛЯ ДЕБАГА
+        console.log("Name", Name); // v
+        console.log("Gender", Gender); // v
+        console.log("Course", Course); // v
+        console.log("Behavior", Behavior); // v
+        console.log("isLate?", isLate); // v
+        console.log("isDoingHomework?", isDoingHomework); // v
+        console.log("leaveGoodResponse?", goodResponse); // v
+    })
+</script>
+<!-- link for image: https://ibb.co/C1Z7T8k -->
+<!-- URL: https://i.ibb.co/kHf8WBR/Feedback-Form-Empty.png -->
+</body>
+
+</html>
