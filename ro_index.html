@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ro">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Feedback Generator RU</title>
+    <title>Feedback Generator RO</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
@@ -240,77 +240,75 @@
     <div class="options-container">
         <form style="display: flex; flex-direction: column; gap: .5rem;" onsubmit="return false" autocomplete="off">
             <fieldset class="fields">
-                <legend>ИМЯ, ФАМИЛИЯ, ПОЛ</legend>
-                <label for="studentName">Имя и фамилия:</label>
-                <input type="text" id="studentName" placeholder="Введите имя и фамилию ученика" required />
-                <label for="gender">Пол ученика:</label>
+                <legend>NUME, PRENUME, GEN</legend>
+                <label for="studentName">Numele și prenumele:</label>
+                <input type="text" id="studentName" placeholder="Introduceți numele și prenumele elevului" required />
+                <label for="gender">Genul studentului:</label>
                 <select id="studentGender" name="gender">
-                    <option value="male">Мужской</option>
-                    <option value="female">Женский</option>
+                    <option value="male">Masculin</option>
+                    <option value="female">Feminin</option>
                 </select>
             </fieldset>
             <fieldset class="fields">
-                <legend>Название курса</legend>
-                <input type="text" id="courseName" placeholder="Введите название курса" required />
+                <legend>Denumirea cursului</legend>
+                <input type="text" id="courseName" placeholder="Introduceți un titlu de curs" required />
             </fieldset>
             <fieldset class="fields">
-                <legend>Поведение ученика</legend>
+                <legend>Comportamentul elevilor</legend>
                 <select id="studentBehavior" name="behavior">
-                    <option value="neutral">Нейтральное</option>
-                    <option value="good">Хорошее</option>
-                    <option value="bad">Плохое</option>
+                    <option value="neutral">Neutru</option>
+                    <option value="good">Bun</option>
+                    <option value="bad">Rau</option>
                 </select>
             </fieldset>
             <fieldset class="fields">
-                <legend>Опаздывает?</legend>
+                <legend>Întârzie?</legend>
                 <span style="display: flex; gap: 1rem">
                     <span>
                         <input type="radio" name="late" id="late" onclick="isLate_FieldAccessibility('late')" />
-                        <label for="late">Да</label>
+                        <label for="late">Da</label>
                     </span>
                     <span>
                         <input type="radio" name="late" id="notLate" checked
                             onclick="isLate_FieldAccessibility('notLate')" />
-                        <label for="late">Нет</label>
+                        <label for="late">Nu</label>
                     </span>
                 </span>
-                <input type="number" name="minutes" id="minutesLate" placeholder="Не опаздывает" disabled />
+                <input type="number" name="minutes" id="minutesLate" placeholder="Nu întârzie" disabled />
             </fieldset>
             <fieldset class="fields">
-                <legend>Домашнее задание</legend>
+                <legend>Teme pentru acasă</legend>
                 <span style="display: flex; gap: 1rem">
                     <input type="radio" name="homeworkDone" id="hDone" checked />
-                    <label for="homeworkDone">Делает</label>
+                    <label for="homeworkDone">Face</label>
                     <input type="radio" name="homeworkDone" id="hNotDone" />
-                    <label for="homeworkDone">Не делает</label>
+                    <label for="homeworkDone">Nu face</label>
                 </span>
             </fieldset>
             <fieldset class="fields">
-                <legend>Похвалить?</legend>
-                <p>Пример похвалы: <br><cite style="font-size: small;">Судя по практическим работам, я могу с
-                        уверенностью сказать, что Анатолий обладает фантазией и творческим мышлением. В области
-                        этого модуля он достигнет отличных результатов</cite></p>
+                <legend>Lauda?</legend>
+                <p>Un exemplu de laudă: <br><cite style="font-size: small;">Judecând după munca sa practică, pot spune cu încredere că Anatoly are imaginație și gândire creativă. El va obține rezultate excelente în domeniul acestui modul</cite></p>
                 <span style="display: flex; gap: 1rem">
                     <input type="radio" name="goodWord" id="yesGood" />
-                    <label for="goodWord">Да</label>
+                    <label for="goodWord">Da</label>
                     <input type="radio" name="goodWord" id="noGood" checked />
-                    <label for="goodWord">Нет</label>
+                    <label for="goodWord">Nu</label>
                 </span>
             </fieldset>
             <br>
             <fieldset class="fields">
-                <legend>Выбор языка</legend>
-                <div><input type="radio" name="langSelect" id="ruSelect" onclick="location.href = '/index.html'" checked />
-                    <label for="langSelect">Русский</label>
+                <legend>Selectarea limbii</legend>
+                <div><input type="radio" name="langSelect" id="ruSelect" onclick="location.href = '/index.html'" />
+                    <label for="langSelect">Rusă</label>
                 </div>
-                <div><input type="radio" name="langSelect" id="roSelect" onclick="location.href = '/ro_index.html'" />
-                    <label for="langSelect">Румынский</label>
+                <div><input type="radio" name="langSelect" id="roSelect" onclick="location.href = '/ro_index.html'" checked/>
+                    <label for="langSelect">Română</label>
                 </div>
             </fieldset>
             <br>
             <fieldset class="mainButtonsSet fields">
-                <button type="submit" style="width: 100%;" id="generateButton">Сгенерировать</button>
-                <button type="button" style="width: 100%;" id="saveButton">Сохранить PDF</button>
+                <button type="submit" style="width: 100%;" id="generateButton">Generare</button>
+                <button type="button" style="width: 100%;" id="saveButton">Salvare PDF</button>
             </fieldset>
         </form>
     </div>
@@ -323,38 +321,38 @@
             <div class="feedback-fields">
                 <div class="feedback-title">
                     <h1>individual feedback</h1>
-                    <h3 id="h3Name">Имя Фамилия (ученика)</h3>
+                    <h3 id="h3Name">Nume Prenume (studentului)</h3>
                 </div>
                 <div class="feedback-stars">
                     <div id="criteria-1" class="rating">
-                        <h4>1. Выполнение домашнего задания</h5>
+                        <h4>1. Efectuarea temelor de acasă</h5>
                             <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     </div>
                     <div id="criteria-2" class="rating">
-                        <h4>2. Работа в классе</h5>
+                        <h4>2. Lucru în clasă</h5>
                             <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     </div>
                     <div id="criteria-3" class="rating">
-                        <h4>3. Освоение материала</h5>
+                        <h4>3. Stăpânirea materialului</h5>
                             <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     </div>
                     <div id="criteria-4" class="rating">
-                        <h4>4. Поведение</h5>
+                        <h4>4. Comportament</h5>
                             <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     </div>
                     <div id="criteria-5" class="rating">
-                        <h4>5. Работа в команде</h5>
+                        <h4>5. Lucru în echipe</h5>
                             <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     </div>
                     <div id="criteria-6" class="rating">
-                        <h4>6. Взаимодействие с учителем</h5>
+                        <h4>6. Interacțiunea cu profesorul</h5>
                             <div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     </div>
                 </div>
                 <div class="feedback-review">
-                    <h3 style="color:#0131FF; margin-bottom: .5rem;">Комментарий учителя:</h3>
+                    <h3 style="color:#0131FF; margin-bottom: .5rem;">Comentariul profesorului:</h3>
                     <textarea name="feedback" id="feedback"
-                        placeholder="Здесь будет автоматически созданный комментарий и добавления от учителя, если нжуно (поле редактируемо)"></textarea>
+                        placeholder="Aici va fi comentariul creat automat și completările profesorului, dacă este necesar (câmpul este editabil)"></textarea>
                 </div>
             </div>
         </div>
@@ -367,10 +365,10 @@
     const isLate_FieldAccessibility = (radio_state) => {
         if (radio_state === 'late') {
             document.getElementById("minutesLate").disabled = false;
-            document.getElementById("minutesLate").placeholder = "Введите количество минут опоздания";
+            document.getElementById("minutesLate").placeholder = "Introduceți numărul de minute de întârziere";
         } else if (radio_state === 'notLate') {
             document.getElementById("minutesLate").disabled = true;
-            document.getElementById("minutesLate").placeholder = "Не опаздывает";
+            document.getElementById("minutesLate").placeholder = "Nu întârzie";
         }
     };
 
@@ -408,35 +406,39 @@
     });
 
     // Функция для изменения имени в родительный падеж
-    function toGenitive(name) {
-        if (!name) return "Введите имя";
+    function toGenitiveRomanian(name, gender) {
+    if (!name) return "Introduceți un nume valid";
 
-        // Простые правила склонения
-        const rules = [
-            { ending: "а", replace: "ы" }, // Марина → Марины
-            { ending: "я", replace: "и" }, // Мария → Марии
-            { ending: "й", replace: "я" }, // Алексей → Алексея
-            { ending: "ь", replace: "я" }, // Лев → Льва
-            { ending: "ий", replace: "ия" }, // Дмитрий → Дмитрия
-            { ending: "ей", replace: "ея" }, // Сергей → Сергея
-            { ending: "ка", replace: "ки" }, // Вероника → Вероники
-            { ending: "на", replace: "ны" }  // Светлана → Светланы
-        ];
+    // Приведение к стандартному регистру (например, Ion → ion, Maria → maria)
+    name = name.trim();
 
-        // Проверяем окончания
-        for (let rule of rules) {
-            if (name.toLowerCase().endsWith(rule.ending)) {
-                return name.slice(0, -rule.ending.length) + rule.replace;
-            }
+    // Список правил склонения
+    const rules = [
+        { ending: "ă", male: false, replace: "ei" },  // Maria → Mariei
+        { ending: "a", male: false, replace: "ei" },  // Ana → Anei
+        { ending: "e", male: false, replace: "ei" },  // Doina → Doinei
+        { ending: "i", male: true, replace: "lui" },  // Mihai → Mihaiului
+        { ending: "u", male: true, replace: "lui" },  // Radu → Radului
+        { ending: "o", male: true, replace: "lui" },  // Ando → Andului
+        { ending: "ău", male: true, replace: "ăului" }, // Pătru → Pătrului
+        { ending: "ă", male: true, replace: "lui" },  // Horia → Horiului
+        { ending: "ul", male: true, replace: "ului" }, // Paul → Paulului
+    ];
+
+    // Определение правила
+    for (let rule of rules) {
+        if (name.toLowerCase().endsWith(rule.ending) && (rule.male === (gender === "male"))) {
+            return name.slice(0, -rule.ending.length) + rule.replace;
         }
-
-        // Добавляем "а" для мужских имен, которые не меняются (например, Иван → Ивана)
-        if (/^[а-яё]+$/i.test(name) && !name.toLowerCase().endsWith("а") && !name.toLowerCase().endsWith("я")) {
-            return name + "а";
-        }
-
-        return name; // Если имя не нужно изменять
     }
+
+    // Добавление стандартных суффиксов, если правила не сработали
+    if (gender === "male") {
+        return `lui ${name}`; // Для мужчин
+    } else {
+        return `ei ${name}`; // Для женщин
+    }
+}
 
 
     // ЭЛЕМЕНТЫ HTML
@@ -447,8 +449,8 @@
         let feedback = "";
         // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
         Name = document.getElementById("studentName").value;
-        let genitiveName = toGenitive(Name.split(" ")[0]);
         let Gender = document.getElementById("studentGender").value;
+        let genitiveName = toGenitiveRomanian(Name.split(" ")[0], Gender);
         let GenderBool = true;
         if (Gender === "male") {
             GenderBool = true
@@ -466,70 +468,70 @@
         // ЗАПОЛНЕНИЕ ФИДБЕКА
         switch (Name) {
             case "":
-                alert("Введите имя и фамилию студента!")
+                alert("Introduceți numele și prenumele elevului!")
                 break;
             default:
                 NameInText.textContent = Name;
                 Name = Name.split(" ")[0];
                 switch (Gender) {
                     case "male":
-                        feedback += `${Name} прилежный ученик академии Impact A&C. На всех уроках задает вопросы, внимательно изучает теоретический материал и успешно применяет его на практике. `;
+                    feedback += `${Name} este un student sârguincios la Academia Impact A&C. El pune întrebări la toate lecțiile, studiază cu atenție materialul teoretic și îl aplică cu succes în practică. `;
                         break;
                     case "female":
-                        feedback += `${Name} прилежная ученица академии Impact A&C. На всех уроках задает вопросы, внимательно изучает теоретический материал и успешно применяет его на практике. `;
+                        feedback += `${Name} este o studenta sârguincioasa la Academia Impact A&C. Ea pune întrebări la toate lecțiile, studiază cu atenție materialul teoretic și îl aplică cu succes în practică. `;
                         break;
                 };
         };
 
         switch (Gender) {
             case "male":
-                feedback += `Он отлично освоил модуль ${Course}. `
+                feedback += `El a stăpânit perfect modulul ${Course}. `
                 break;
             case "female":
-                feedback += `Она отлично освоила модуль ${Course}. `
+                feedback += `Ea a stăpânit perfect modulul ${Course}. `
                 break;
         };
 
         switch (Course) {
             case "":
-                alert("Введите название курса!")
+                alert("Introduceți titlul cursului!")
                 break;
         };
 
         switch (Behavior) {
             case "neutral":
-                feedback += "Замечаний насчёт поведения в классе нет. ";
+                feedback += "Nu există observații cu privire la comportamentul în clasă. ";
                 break;
             case "good":
-                feedback += "Хвалим за прилежное поведение, дружелюбность и внимательность на лекциях! ";
+                feedback += "Lăudam comportamentul bun, amabilitatea și atenția la cursuri! ";
                 break;
             case "bad":
-                feedback += `К сожалению, поведение ${genitiveName} отвлекает как ${GenderBool ? "его" : "её"}, так и других учеников в классе от учебного процесса. Настоятельно просим решить этот вопрос, поговорив с ${GenderBool ? "учеником" : "ученицей"}. ${Course} - увлекательная область, пользующаяся большой популярностью, и, на мой взгляд, у ${genitiveName} есть способности и потенциал в этом направлении. ${GenderBool ? "Ему" : "Ей"} просто нужно немного усердия и усилий, и ${GenderBool ? "он" : "она"} добьется успеха! `;
+                feedback += `Din păcate, comportamentul lui ${genitiveName} distrage atenția atât lui ${GenderBool ? "lui" : "ei"} și pe ceilalți elevi din clasă de la procesul de învățare. Sunteți încurajat să abordați această problemă vorbind cu ${GenderBool ? "student" : "student"}. ${Course} este un domeniu fascinant care este foarte popular și, în opinia mea, ${genitiveName} are abilități și potențial în acest domeniu. ${GenderBool ? "El" : "Ea"} are nevoie doar de ceva sârguință și efort, iar ${GenderBool ? "el" : "ea"} va reuși!`;
                 break;
         }
 
         switch (isLate) {
             case true:
                 let minutes = document.getElementById("minutesLate").value;
-                feedback += `Однако иногда ${Name} опаздывает на урок на ${minutes} минут. Мы просим вас следить за ${GenderBool ? "ним" : "ней"} и удостовериться, что ${GenderBool ? "он" : "она"} приходит на уроки вовремя. За эти ${minutes} минут группа успевает начать анализ домашних заданий и изучение новой темы, и ${GenderBool ? "он" : "она"} упускает важную информацию. `;
+                feedback += `Ocazional, ${Name} întârzie ${minutes} minute la ore. Vă rugăm să fiți cu ochii pe ${GenderBool ? "el" : "ea"} și să vă asigurați că ${GenderBool ? "el" : "ea"} ajunge la ore la timp. În acele ${minutes} minute, grupul are timp să înceapă să analizeze temele pentru acasă și să învețe un subiect nou, iar ${GenderBool ? "he" : "she"} pierde informații importante.`;
                 break;
             case false:
-                feedback += "Замечаний о пунктуальности нет. ";
+                feedback += "Nicio observație cu privire la punctualitate. ";
                 break;
         };
 
         switch (isDoingHomework) {
             case true:
-                feedback += `${GenderBool ? "выполнял" : "выполняла"} домашние задания в срок. `;
+                feedback += "A completat temele la timp. ";
                 break;
             case false:
-                feedback += `Почти не выполняет домашние задания! По этой причине у ${GenderBool ? "него" : "неё"} возникают трудности с освоением нового материала. Пожалуйста, проверяйте и следите за выполнением всех заданий после каждого урока. `;
+                feedback += `Peste că nu-și face temele! Din acest motiv, ${GenderBool ? "el" : "ea"} are probleme cu învățarea noului material. Vă rugăm să verificați și să urmăriți toate temele după fiecare lecție. `;
                 break;
         };
 
         switch (goodResponse) {
             case true:
-                feedback += `Судя по работе в классе, я могу с уверенностью сказать, что ${Name} обладает фантазией и творческим мышлением. В области ${Course} ${GenderBool ? "он" : "она"} достигнет отличных результатов, если продолжать прилагать усилия. `;
+                feedback += `Din munca mea în clasă, pot spune cu siguranță că ${Name} are imaginație și gândire creativă. În domeniul ${Course} ${GenderBool ? "el" : "ea"} va obține rezultate foarte bune dacă va continua să depună efort. `;
                 break;
             case false:
                 break;
