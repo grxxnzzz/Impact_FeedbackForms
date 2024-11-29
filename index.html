@@ -362,6 +362,12 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>
+    function toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        );
+    }
     // ЛОГИКА БЛОКИРОВКИ ПОЛЯ С МИНУТАМИ ДЛЯ ОПОЗДАНИЯ
     // если выбрано, что не опаздывает, тогда минуты вписать нельзя
     const isLate_FieldAccessibility = (radio_state) => {
@@ -381,6 +387,7 @@
     document.getElementById("saveButton").addEventListener('click', () => {
         // ОПЦИИ ДЛЯ PDF ФАЙЛА
         Name = document.getElementById("studentName").value;
+        Name = toTitleCase(Name);
         Course = document.getElementById("courseName").value;
         const options = {
             margin: 0,
@@ -447,6 +454,7 @@
         let feedback = "";
         // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
         Name = document.getElementById("studentName").value;
+        Name = toTitleCase(Name);
         let genitiveName = toGenitive(Name.split(" ")[0]);
         let Gender = document.getElementById("studentGender").value;
         let GenderBool = true;
@@ -535,7 +543,7 @@
                 break;
         }
 
-        document.getElementById("feedback").textContent = feedback;
+        document.getElementById("feedback").value = feedback;
 
         // ДЛЯ ДЕБАГА
         console.log("Name", Name); // v

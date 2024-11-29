@@ -360,6 +360,13 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>
+    function toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        );
+    }
+
     // ЛОГИКА БЛОКИРОВКИ ПОЛЯ С МИНУТАМИ ДЛЯ ОПОЗДАНИЯ
     // если выбрано, что не опаздывает, тогда минуты вписать нельзя
     const isLate_FieldAccessibility = (radio_state) => {
@@ -379,6 +386,7 @@
     document.getElementById("saveButton").addEventListener('click', () => {
         // ОПЦИИ ДЛЯ PDF ФАЙЛА
         Name = document.getElementById("studentName").value;
+        Name = toTitleCase(Name);
         Course = document.getElementById("courseName").value;
         const options = {
             margin: 0,
@@ -449,6 +457,7 @@
         let feedback = "";
         // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
         Name = document.getElementById("studentName").value;
+        Name = toTitleCase(Name);
         let Gender = document.getElementById("studentGender").value;
         let genitiveName = toGenitiveRomanian(Name.split(" ")[0], Gender);
         let GenderBool = true;
@@ -506,14 +515,14 @@
                 feedback += "Lăudam comportamentul bun, amabilitatea și atenția la cursuri! ";
                 break;
             case "bad":
-                feedback += `Din păcate, comportamentul lui ${genitiveName} distrage atenția atât lui ${GenderBool ? "lui" : "ei"} și pe ceilalți elevi din clasă de la procesul de învățare. Sunteți încurajat să abordați această problemă vorbind cu ${GenderBool ? "student" : "student"}. ${Course} este un domeniu fascinant care este foarte popular și, în opinia mea, ${genitiveName} are abilități și potențial în acest domeniu. ${GenderBool ? "El" : "Ea"} are nevoie doar de ceva sârguință și efort, iar ${GenderBool ? "el" : "ea"} va reuși!`;
+                feedback += `Din păcate, comportamentul lui ${genitiveName} distrage atenția atât lui ${GenderBool ? "lui" : "ei"} și pe ceilalți elevi din clasă de la procesul de învățare. Sunteți încurajat să abordați această problemă vorbind cu ${GenderBool ? "student" : "student"}. ${Course} este un domeniu fascinant care este foarte popular și, în opinia mea, ${genitiveName} are abilități și potențial în acest domeniu. ${GenderBool ? "El" : "Ea"} are nevoie doar de ceva sârguință și efort, iar ${GenderBool ? "el" : "ea"} va reuși! `;
                 break;
         }
 
         switch (isLate) {
             case true:
                 let minutes = document.getElementById("minutesLate").value;
-                feedback += `Ocazional, ${Name} întârzie ${minutes} minute la ore. Vă rugăm să fiți cu ochii pe ${GenderBool ? "el" : "ea"} și să vă asigurați că ${GenderBool ? "el" : "ea"} ajunge la ore la timp. În acele ${minutes} minute, grupul are timp să înceapă să analizeze temele pentru acasă și să învețe un subiect nou, iar ${GenderBool ? "he" : "she"} pierde informații importante.`;
+                feedback += `Ocazional, ${Name} întârzie ${minutes} minute la ore. Vă rugăm să fiți cu ochii pe ${GenderBool ? "el" : "ea"} și să vă asigurați că ${GenderBool ? "el" : "ea"} ajunge la ore la timp. În acele ${minutes} minute, grupul are timp să înceapă să analizeze temele pentru acasă și să învețe un subiect nou, iar ${GenderBool ? "el" : "ea"} pierde informații importante. `;
                 break;
             case false:
                 feedback += "Nicio observație cu privire la punctualitate. ";
@@ -531,16 +540,19 @@
 
         switch (goodResponse) {
             case true:
-                feedback += `Din munca mea în clasă, pot spune cu siguranță că ${Name} are imaginație și gândire creativă. În domeniul ${Course} ${GenderBool ? "el" : "ea"} va obține rezultate foarte bune dacă va continua să depună efort. `;
+                feedback += `Din observări în clasă, pot spune cu siguranță că ${Name} are imaginație și gândire creativă. În domeniul ${Course} ${GenderBool ? "el" : "ea"} va obține rezultate foarte bune dacă va continua să depună efort. `;
                 break;
             case false:
                 break;
         }
 
-        document.getElementById("feedback").textContent = feedback;
+        document.getElementById("feedback").value = feedback;
 
         // ДЛЯ ДЕБАГА
+        console.log("THIS MESSAGE MEANS IT WORKS");
+        console.log("---------------------------");
         console.log("Name", Name); // v
+        console.log("Genitive Name", genitiveName); // v
         console.log("Gender", Gender); // v
         console.log("GenderBool", GenderBool); // v
         console.log("Course", Course); // v
@@ -548,6 +560,7 @@
         console.log("isLate?", isLate); // v
         console.log("isDoingHomework?", isDoingHomework); // v
         console.log("leaveGoodResponse?", goodResponse); // v
+        console.log("---------------------------");
     })
 </script>
 <!-- link for image: https://ibb.co/C1Z7T8k -->
