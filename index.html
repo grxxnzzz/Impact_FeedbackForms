@@ -392,9 +392,9 @@
         const options = {
             margin: 0,
             filename: `${Course}_${Name}_feedback.pdf`,
-            image: { type: 'png', quality: 1 },
+            image: { type: 'jpeg', quality: 1 },
             html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+            jsPDF: { unit: 'in', compress: true, format: 'letter', orientation: 'portrait' },
         };
         html2pdf().set(options).from(document.getElementById('feedback-form-full')).save();
     })
