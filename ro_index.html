@@ -386,8 +386,9 @@
     document.getElementById("saveButton").addEventListener('click', () => {
         // ОПЦИИ ДЛЯ PDF ФАЙЛА
         Name = document.getElementById("studentName").value;
-        Name = toTitleCase(Name);
+        Name = toTitleCase(Name.trim());
         Course = document.getElementById("courseName").value;
+        Course = Course.trim();
         const options = {
             margin: 0,
             filename: `${Course}_${Name}_feedback.pdf`,
@@ -457,7 +458,7 @@
         let feedback = "";
         // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
         Name = document.getElementById("studentName").value;
-        Name = toTitleCase(Name);
+        Name = toTitleCase(Name.trim());
         let Gender = document.getElementById("studentGender").value;
         let genitiveName = toGenitiveRomanian(Name.split(" ")[0], Gender);
         let GenderBool = true;
@@ -467,6 +468,7 @@
             GenderBool = false
         };
         Course = document.getElementById("courseName").value;
+        Course = Course.trim();
         let Behavior = document.getElementById("studentBehavior").value;
         let isLate = document.getElementById("late").checked ? true : false;
         let isDoingHomework = document.getElementById("hDone").checked ? true : false;

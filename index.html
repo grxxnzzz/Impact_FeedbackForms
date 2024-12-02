@@ -387,8 +387,9 @@
     document.getElementById("saveButton").addEventListener('click', () => {
         // ОПЦИИ ДЛЯ PDF ФАЙЛА
         Name = document.getElementById("studentName").value;
-        Name = toTitleCase(Name);
+        Name = toTitleCase(Name.trim());
         Course = document.getElementById("courseName").value;
+        Course = Course.trim();
         const options = {
             margin: 0,
             filename: `${Course}_${Name}_feedback.pdf`,
@@ -454,7 +455,7 @@
         let feedback = "";
         // ЭЛЕМЕНТЫ И ДАННЫЕ HTML
         Name = document.getElementById("studentName").value;
-        Name = toTitleCase(Name);
+        Name = toTitleCase(Name.trim());
         let genitiveName = toGenitive(Name.split(" ")[0]);
         let Gender = document.getElementById("studentGender").value;
         let GenderBool = true;
@@ -464,6 +465,7 @@
             GenderBool = false
         };
         Course = document.getElementById("courseName").value;
+        Course = Course.trim();
         let Behavior = document.getElementById("studentBehavior").value;
         let isLate = document.getElementById("late").checked ? true : false;
         let isDoingHomework = document.getElementById("hDone").checked ? true : false;
@@ -528,7 +530,7 @@
 
         switch (isDoingHomework) {
             case true:
-                feedback += `${GenderBool ? "выполнял" : "выполняла"} домашние задания в срок. `;
+                feedback += `${GenderBool ? "Выполнял" : "Выполняла"} домашние задания в срок. `;
                 break;
             case false:
                 feedback += `Почти не выполняет домашние задания! По этой причине у ${GenderBool ? "него" : "неё"} возникают трудности с освоением нового материала. Пожалуйста, проверяйте и следите за выполнением всех заданий после каждого урока. `;
